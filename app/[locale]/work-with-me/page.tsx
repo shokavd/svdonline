@@ -1,4 +1,5 @@
 import { getT, type Locale } from "../../../lib/i18n";
+import { ApplyButton } from "../../../components/ApplyButton";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -107,16 +108,12 @@ export default async function WorkWithMePage({ params }: { params: Promise<{ loc
                 </ul>
 
                 <div className="mt-auto">
-                  <a
-                    href={`mailto:contact@svdonline.com?subject=Application: ${pkg.name} package`}
-                    className={`block text-center font-semibold text-sm px-5 py-3 rounded-lg transition-opacity hover:opacity-90 ${
-                      pkg.accent
-                        ? "bg-[var(--accent)] text-white"
-                        : "bg-[var(--foreground)] text-white"
-                    }`}
-                  >
-                    {w.apply(pkg.name)}
-                  </a>
+                  <ApplyButton
+                    locale={locale as Locale}
+                    packageId={pkg.id}
+                    packageName={pkg.name}
+                    accent={pkg.accent}
+                  />
                 </div>
               </div>
             );

@@ -1,0 +1,54 @@
+{
+  "name": "SVD Online — Intake Notifications",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "svdonline-intake",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Intake Form",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "svdonline-intake"
+    },
+    {
+      "parameters": {
+        "sendTo": "shokavdooren@gmail.com",
+        "subject": "=🔔 New {{ $json.body.package }} application — {{ $json.body.name }}",
+        "emailType": "html",
+        "message": "=<div style=\"font-family: sans-serif; max-width: 600px;\">\n<h2 style=\"color: #ea580c; margin-bottom: 4px;\">New intake application</h2>\n<p style=\"color: #666; margin-top: 0;\">Submitted {{ $json.body.submittedAt }}</p>\n\n<table style=\"width: 100%; border-collapse: collapse; margin: 16px 0;\">\n  <tr style=\"background: #f9f9f9;\">\n    <td style=\"padding: 10px 12px; font-weight: bold; width: 120px;\">Package</td>\n    <td style=\"padding: 10px 12px;\">{{ $json.body.package }}</td>\n  </tr>\n  <tr>\n    <td style=\"padding: 10px 12px; font-weight: bold;\">Name</td>\n    <td style=\"padding: 10px 12px;\">{{ $json.body.name }}</td>\n  </tr>\n  <tr style=\"background: #f9f9f9;\">\n    <td style=\"padding: 10px 12px; font-weight: bold;\">Email</td>\n    <td style=\"padding: 10px 12px;\"><a href=\"mailto:{{ $json.body.email }}\">{{ $json.body.email }}</a></td>\n  </tr>\n  <tr>\n    <td style=\"padding: 10px 12px; font-weight: bold;\">Timeline</td>\n    <td style=\"padding: 10px 12px;\">{{ $json.body.timeline }}</td>\n  </tr>\n</table>\n\n<h3 style=\"color: #111;\">What they need</h3>\n<p style=\"background: #f9f9f9; padding: 12px; border-radius: 8px; line-height: 1.6;\">{{ $json.body.problem }}</p>\n\n<h3 style=\"color: #111;\">Tools / platforms</h3>\n<p style=\"background: #f9f9f9; padding: 12px; border-radius: 8px;\">{{ $json.body.tools || 'Not specified' }}</p>\n\n<p style=\"margin-top: 24px;\">\n  <a href=\"mailto:{{ $json.body.email }}?subject=Re: {{ $json.body.package }} application\" style=\"background: #ea580c; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;\">Reply to {{ $json.body.name }} →</a>\n</p>\n</div>",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0002-4000-8000-000000000002",
+      "name": "Email Notification",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [500, 300],
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Intake Form": {
+      "main": [
+        [
+          {
+            "node": "Email Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
