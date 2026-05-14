@@ -28,7 +28,8 @@ export function ApplyButton({
   const [timeline, setTimeline] = useState("");
   const [extra, setExtra] = useState<Record<string, string>>({});
 
-  const fields = f.packageFields[packageId as PackageId] ?? [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const fields = (f.packageFields[packageId as PackageId] ?? []) as any[];
 
   function close() {
     setOpen(false);
@@ -41,6 +42,12 @@ export function ApplyButton({
 
   function setField(id: string, value: string) {
     setExtra((prev) => ({ ...prev, [id]: value }));
+  }
+
+  function toggleCheckbox(id: string, option: string, checked: boolean) {
+    const current = (extra[id] ?? "").split(", ").filter(Boolean);
+    const updated = checked ? [...current, option] : current.filter((v) => v !== option);
+    setField(id, updated.join(", "));
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -77,6 +84,109 @@ export function ApplyButton({
 
   const labelClass = "block text-sm font-medium text-[var(--foreground)] mb-1.5";
 
+  function renderField(field: any) {
+    const isOptional = !!field.optional;
+    const optLabel = isOptional ? (
+      <span className="font-normal text-[var(--muted)]"> ({f.optionalLabel})</span>
+    ) : null;
+
+    if (field.type === "radio") {
+      return (
+        <div key={field.id}>
+          <label className={labelClass}>{field.label}{optLabel}</label>
+          <div className="space-y-2">
+            {(field.options as string[]).map((opt: string) => (
+              <label key={opt} className="flex items-center gap-2.5 text-sm text-[var(--muted)] cursor-pointer">
+                <input
+                  type="radio"
+                  name={field.id}
+                  value={opt}
+                  checked={extra[field.id] === opt}
+                  onChange={() => setField(field.id, opt)}
+                  required={!isOptional}
+                  className="accent-[var(--accent)] shrink-0"
+                />
+                {opt}
+              </label>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    if (field.type === "checkboxes") {
+      const selected = (extra[field.id] ?? "").split(", ").filter(Boolean);
+      return (
+        <div key={field.id}>
+          <label className={labelClass}>{field.label}{optLabel}</label>
+          <div className="grid grid-cols-2 gap-1.5">
+            {(field.options as string[]).map((opt: string) => (
+              <label key={opt} className="flex items-start gap-2 text-sm text-[var(--muted)] cursor-pointer leading-snug">
+                <input
+                  type="checkbox"
+                  checked={selected.includes(opt)}
+                  onChange={(e) => toggleCheckbox(field.id, opt, e.target.checked)}
+                  className="accent-[var(--accent)] shrink-0 mt-0.5"
+                />
+                <span>{opt}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    if (field.type === "select") {
+      return (
+        <div key={field.id}>
+          <label className={labelClass}>{field.label}{optLabel}</label>
+          <select
+            required={!isOptional}
+            value={extra[field.id] ?? ""}
+            onChange={(e) => setField(field.id, e.target.value)}
+            className={inputClass}
+          >
+            <option value="">{f.selectDefault}</option>
+            {(field.options as string[]).map((opt: string) => (
+              <option key={opt} value={opt}>{opt}</option>
+            ))}
+          </select>
+        </div>
+      );
+    }
+
+    if (field.type === "text") {
+      return (
+        <div key={field.id}>
+          <label className={labelClass}>{field.label}{optLabel}</label>
+          <input
+            type="text"
+            required={!isOptional}
+            value={extra[field.id] ?? ""}
+            onChange={(e) => setField(field.id, e.target.value)}
+            placeholder={field.placeholder ?? ""}
+            className={inputClass}
+          />
+        </div>
+      );
+    }
+
+    // textarea (default)
+    return (
+      <div key={field.id}>
+        <label className={labelClass}>{field.label}{optLabel}</label>
+        <textarea
+          required={!isOptional}
+          rows={3}
+          value={extra[field.id] ?? ""}
+          onChange={(e) => setField(field.id, e.target.value)}
+          placeholder={field.placeholder ?? ""}
+          className={`${inputClass} resize-none`}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
       <button
@@ -91,19 +201,12 @@ export function ApplyButton({
       {open && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) close();
-          }}
+          onClick={(e) => { if (e.target === e.currentTarget) close(); }}
         >
           <div className="bg-[var(--background)] rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-xl">
-            <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
+            <div className="flex items-center justify-between p-6 border-b border-[var(--border)] sticky top-0 bg-[var(--background)] z-10">
               <h2 className="font-bold text-[var(--foreground)]">{f.modalTitle(packageName)}</h2>
-              <button
-                onClick={close}
-                className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors leading-none text-lg"
-              >
-                ✕
-              </button>
+              <button onClick={close} className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors leading-none text-lg">✕</button>
             </div>
 
             <div className="p-6">
@@ -112,84 +215,28 @@ export function ApplyButton({
                   <p className="text-3xl mb-3">✅</p>
                   <p className="font-bold text-[var(--foreground)] mb-2">{f.successTitle}</p>
                   <p className="text-sm text-[var(--muted)]">{f.successBody}</p>
-                  <button onClick={close} className="mt-6 text-sm text-[var(--accent)] hover:underline">
-                    {f.close}
-                  </button>
+                  <button onClick={close} className="mt-6 text-sm text-[var(--accent)] hover:underline">{f.close}</button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
                     <label className={labelClass}>{f.nameLabel}</label>
-                    <input
-                      type="text"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder={f.namePlaceholder}
-                      className={inputClass}
-                    />
+                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder={f.namePlaceholder} className={inputClass} />
                   </div>
 
                   <div>
                     <label className={labelClass}>{f.emailLabel}</label>
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder={f.emailPlaceholder}
-                      className={inputClass}
-                    />
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder={f.emailPlaceholder} className={inputClass} />
                   </div>
 
-                  {fields.map((field) => (
-                    <div key={field.id}>
-                      <label className={labelClass}>
-                        {field.label}
-                        {"optional" in field && field.optional && (
-                          <span className="font-normal text-[var(--muted)]"> (optional)</span>
-                        )}
-                      </label>
-                      {"options" in field && Array.isArray(field.options) ? (
-                        <select
-                          required
-                          value={extra[field.id] ?? ""}
-                          onChange={(e) => setField(field.id, e.target.value)}
-                          className={inputClass}
-                        >
-                          <option value="">{f.selectDefault}</option>
-                          {(field.options as string[]).map((opt) => (
-                            <option key={opt} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <textarea
-                          required={!("optional" in field && field.optional)}
-                          rows={3}
-                          value={extra[field.id] ?? ""}
-                          onChange={(e) => setField(field.id, e.target.value)}
-                          placeholder={"placeholder" in field ? field.placeholder : ""}
-                          className={`${inputClass} resize-none`}
-                        />
-                      )}
-                    </div>
-                  ))}
+                  {fields.map((field) => renderField(field))}
 
                   <div>
                     <label className={labelClass}>{f.timelineLabel}</label>
-                    <select
-                      required
-                      value={timeline}
-                      onChange={(e) => setTimeline(e.target.value)}
-                      className={inputClass}
-                    >
+                    <select required value={timeline} onChange={(e) => setTimeline(e.target.value)} className={inputClass}>
                       <option value="">{f.timelineDefault}</option>
                       {f.timelines.map((tl) => (
-                        <option key={tl} value={tl}>
-                          {tl}
-                        </option>
+                        <option key={tl} value={tl}>{tl}</option>
                       ))}
                     </select>
                   </div>
