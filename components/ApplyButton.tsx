@@ -55,8 +55,11 @@ export function ApplyButton({
     setStatus("submitting");
 
     const details = fields
-      .map((field) => `${field.label}\n${extra[field.id] || "—"}`)
-      .join("\n\n");
+      .map((field) => {
+        const answer = (extra[field.id] || "—").replace(/\n/g, "<br>");
+        return `<div style="margin-bottom:16px"><p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#ea580c;text-transform:uppercase;letter-spacing:.05em">${field.label}</p><div style="padding:10px 12px;background:#f9f9f9;border-radius:6px;font-size:14px;line-height:1.6">${answer}</div></div>`;
+      })
+      .join("");
 
     try {
       const res = await fetch(WEBHOOK_URL, {
