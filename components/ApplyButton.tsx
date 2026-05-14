@@ -72,6 +72,7 @@ export function ApplyButton({
           email,
           timeline,
           details,
+          fields: fields.map((f) => ({ label: f.label, answer: extra[f.id] || "—" })),
           submittedAt: new Date().toISOString(),
         }),
       });
