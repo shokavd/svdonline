@@ -18,11 +18,14 @@ export function AdminForm() {
   const [docType, setDocType] = useState<DocType>("agreement");
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
-  const [packageName, setPackageName] = useState("");
+  const [basePackage, setBasePackage] = useState("");
+  const [upgradePackage, setUpgradePackage] = useState("");
+  const [packageName, setPackageName] = useState(""); // the one actually chosen
   const [timeline, setTimeline] = useState("");
   const [chosenOption, setChosenOption] = useState<"A" | "B" | "C">("B");
   const [callNotes, setCallNotes] = useState("");
   const [fields, setFields] = useState<IntakeField[]>([]);
+  const [sendDirectly, setSendDirectly] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
 
   useEffect(() => {
@@ -30,7 +33,11 @@ export function AdminForm() {
     if (type === "agreement" || type === "thinkover") setDocType(type);
     setClientName(params.get("name") || "");
     setClientEmail(params.get("email") || "");
-    setPackageName(params.get("package") || "");
+    const pkg = params.get("package") || "";
+    const upgrade = params.get("upgradePackage") || "";
+    setBasePackage(pkg);
+    setUpgradePackage(upgrade);
+    setPackageName(pkg); // default to base package
     setTimeline(params.get("timeline") || "");
 
     const raw = params.get("data");
@@ -40,7 +47,7 @@ export function AdminForm() {
         const parsed = JSON.parse(json) as IntakeField[];
         setFields(parsed);
       } catch {
-        // silently ignore malformed data
+        // silently ignore
       }
     }
   }, [params]);
@@ -61,6 +68,7 @@ export function AdminForm() {
           packageName,
           timeline,
           fields,
+          sendDirectly,
         }),
       });
       if (!res.ok) throw new Error();
@@ -78,9 +86,13 @@ export function AdminForm() {
     return (
       <div className="text-center py-16">
         <p className="text-4xl mb-4">✅</p>
-        <p className="font-bold text-gray-900 text-lg mb-2">Generating…</p>
+        <p className="font-bold text-gray-900 text-lg mb-2">
+          {sendDirectly ? "Sent to client!" : "Generating draft…"}
+        </p>
         <p className="text-sm text-gray-500">
-          Check your email in about 30 seconds. Review the draft and forward it to {clientEmail || "the client"}.
+          {sendDirectly
+            ? `Email sent directly to ${clientEmail}. You have a BCC copy in your inbox.`
+            : `Check contact@svdonline.com in about 30 seconds. Review and forward to ${clientEmail || "the client"}.`}
         </p>
       </div>
     );
@@ -101,18 +113,43 @@ export function AdminForm() {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className={labelClass}>Package</label>
-          <input type="text" required value={packageName} onChange={(e) => setPackageName(e.target.value)} className={inputClass} />
-        </div>
-        <div>
           <label className={labelClass}>Timeline</label>
           <input type="text" value={timeline} onChange={(e) => setTimeline(e.target.value)} className={inputClass} />
         </div>
       </div>
 
+      {/* Package selector — shows upgrade option if Claude flagged one */}
+      <div>
+        <label className={labelClass}>Package agreed on the call</label>
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center gap-2.5 text-sm cursor-pointer">
+            <input
+              type="radio"
+              name="packageChoice"
+              checked={packageName === basePackage}
+              onChange={() => setPackageName(basePackage)}
+              className="accent-orange-500"
+            />
+            <span>{basePackage} <span className="text-gray-400">(originally applied for)</span></span>
+          </label>
+          {upgradePackage && (
+            <label className="flex items-center gap-2.5 text-sm cursor-pointer">
+              <input
+                type="radio"
+                name="packageChoice"
+                checked={packageName === upgradePackage}
+                onChange={() => setPackageName(upgradePackage)}
+                className="accent-orange-500"
+              />
+              <span className="font-medium text-orange-600">{upgradePackage} <span className="text-gray-400 font-normal">(upgrade — Claude flagged this)</span></span>
+            </label>
+          )}
+        </div>
+      </div>
+
       <div>
         <label className={labelClass}>Document type</label>
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           {(["agreement", "thinkover"] as DocType[]).map((t) => (
             <label key={t} className="flex items-center gap-2 text-sm cursor-pointer">
               <input
@@ -158,7 +195,7 @@ export function AdminForm() {
           rows={5}
           value={callNotes}
           onChange={(e) => setCallNotes(e.target.value)}
-          placeholder="e.g. Client mentioned they also want invoice reminders. Budget is flexible. They use Moneybird for invoicing. Already has n8n account."
+          placeholder="e.g. Client mentioned they also want invoice reminders. Budget is flexible. They use Moneybird. Already has n8n account."
           className={`${inputClass} resize-none`}
         />
       </div>
@@ -176,6 +213,37 @@ export function AdminForm() {
           </div>
         </div>
       )}
+
+      {/* Send mode */}
+      <div className="border border-gray-200 rounded-xl p-4 space-y-2">
+        <p className="text-sm font-medium text-gray-700">How should this be sent?</p>
+        <label className="flex items-start gap-2.5 text-sm cursor-pointer">
+          <input
+            type="radio"
+            name="sendMode"
+            checked={!sendDirectly}
+            onChange={() => setSendDirectly(false)}
+            className="accent-orange-500 mt-0.5"
+          />
+          <span>
+            <span className="font-medium">Send draft to me first</span>
+            <span className="text-gray-400 block text-xs">You review, then forward to the client</span>
+          </span>
+        </label>
+        <label className="flex items-start gap-2.5 text-sm cursor-pointer">
+          <input
+            type="radio"
+            name="sendMode"
+            checked={sendDirectly}
+            onChange={() => setSendDirectly(true)}
+            className="accent-orange-500 mt-0.5"
+          />
+          <span>
+            <span className="font-medium">Send directly to client</span>
+            <span className="text-gray-400 block text-xs">Sent from contact@svdonline.com — you get a BCC copy</span>
+          </span>
+        </label>
+      </div>
 
       {status === "error" && (
         <p className="text-sm text-red-600">Something went wrong. Try again or check n8n.</p>
