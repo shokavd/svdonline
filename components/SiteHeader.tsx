@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -42,12 +43,13 @@ export default function SiteHeader({ locale, nav }: {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-14 h-16 flex items-center justify-between">
           <Link href={`/${locale}`} className="flex items-center gap-2.5 group">
-            <span
-              className="flex items-center justify-center w-8 h-8 rounded-lg font-black text-sm select-none shrink-0 transition-all"
-              style={{ background: "var(--accent)", color: "#fff", boxShadow: "0 0 12px rgba(255,45,138,0.4)" }}
-            >
-              S
-            </span>
+            <Image
+              src="/logo-mark.png"
+              alt="SVD Online"
+              width={32}
+              height={32}
+              className="shrink-0 transition-opacity group-hover:opacity-90"
+            />
             <span className="font-bold transition-colors" style={{ color: "var(--foreground)" }}>
               SVD Online
             </span>
