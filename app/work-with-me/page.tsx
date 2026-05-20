@@ -1,2 +1,5 @@
-import { redirect } from "next/navigation";
-export default function WorkWithMe() { redirect("/en/work-with-me"); }
+import ClientRedirect from "../../components/ClientRedirect";
+
+export default function WorkWithMe() {
+  return <ClientRedirect to="/en/work-with-me/" />;
+}

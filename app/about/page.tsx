@@ -1,2 +1,5 @@
-import { redirect } from "next/navigation";
-export default function About() { redirect("/en/about"); }
+import ClientRedirect from "../../components/ClientRedirect";
+
+export default function About() {
+  return <ClientRedirect to="/en/about/" />;
+}

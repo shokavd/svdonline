@@ -1,0 +1,86 @@
+{
+  "name": "SVD Online — Contact Form",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "svdonline-contact",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Contact Form Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "svdonline-contact"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true }) }}",
+        "options": {}
+      },
+      "id": "respond-immediately",
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [460, 180]
+    },
+    {
+      "parameters": {
+        "fromEmail": "contact@svdonline.com",
+        "toEmail": "shokavdooren@gmail.com",
+        "subject": "=New contact: {{ $json.body.subject }} — {{ $json.body.name }}",
+        "emailFormat": "html",
+        "message": "=<div style=\"font-family: sans-serif; max-width: 600px; color: #1a0508;\">\n  <div style=\"background: #FF2D8A; padding: 24px 32px; border-radius: 12px 12px 0 0;\">\n    <h2 style=\"color: #fff; margin: 0; font-size: 20px;\">New contact form submission</h2>\n    <p style=\"color: rgba(255,255,255,0.8); margin: 4px 0 0; font-size: 14px;\">SVD Online · {{ $json.body.locale === 'nl' ? 'Dutch visitor' : 'English visitor' }}</p>\n  </div>\n\n  <div style=\"background: #fff8f3; padding: 32px; border: 1px solid #f0d5c5; border-top: none; border-radius: 0 0 12px 12px;\">\n    <table style=\"width: 100%; border-collapse: collapse; font-size: 14px;\">\n      <tr>\n        <td style=\"padding: 10px 0; color: #7a5048; width: 110px; vertical-align: top;\">Name</td>\n        <td style=\"padding: 10px 0; font-weight: 600; color: #1a0508;\">{{ $json.body.name }}</td>\n      </tr>\n      <tr style=\"border-top: 1px solid #f0d5c5;\">\n        <td style=\"padding: 10px 0; color: #7a5048; vertical-align: top;\">Email</td>\n        <td style=\"padding: 10px 0; font-weight: 600;\"><a href=\"mailto:{{ $json.body.email }}\" style=\"color: #FF2D8A;\">{{ $json.body.email }}</a></td>\n      </tr>\n      <tr style=\"border-top: 1px solid #f0d5c5;\">\n        <td style=\"padding: 10px 0; color: #7a5048; vertical-align: top;\">Subject</td>\n        <td style=\"padding: 10px 0; font-weight: 600; color: #1a0508;\">{{ $json.body.subject }}</td>\n      </tr>\n      <tr style=\"border-top: 1px solid #f0d5c5;\">\n        <td style=\"padding: 10px 0; color: #7a5048; vertical-align: top;\">Message</td>\n        <td style=\"padding: 10px 0; color: #1a0508; white-space: pre-wrap;\">{{ $json.body.message }}</td>\n      </tr>\n    </table>\n\n    <div style=\"margin-top: 28px; padding-top: 20px; border-top: 1px solid #f0d5c5; display: flex; gap: 12px;\">\n      <a href=\"mailto:{{ $json.body.email }}?subject=Re: {{ $json.body.subject }}\"\n         style=\"display: inline-block; background: #FF2D8A; color: #fff; font-weight: 700; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-size: 14px;\">\n        Reply to {{ $json.body.name }} →\n      </a>\n    </div>\n\n    <p style=\"margin-top: 24px; font-size: 11px; color: #a09090;\">Submitted via svdonline.com/contact · {{ new Date().toISOString() }}</p>\n  </div>\n</div>",
+        "options": {}
+      },
+      "id": "email-to-shoka",
+      "name": "Email to Shoka",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [460, 420]
+    },
+    {
+      "parameters": {
+        "fromEmail": "contact@svdonline.com",
+        "toEmail": "={{ $json.body.email }}",
+        "subject": "={{ $json.body.locale === 'nl' ? 'Bedankt voor je bericht — SVD Online' : 'Thanks for getting in touch — SVD Online' }}",
+        "emailFormat": "html",
+        "message": "=<div style=\"font-family: sans-serif; max-width: 600px; color: #1a0508;\">\n  <div style=\"background: #FF2D8A; padding: 24px 32px; border-radius: 12px 12px 0 0;\">\n    <h2 style=\"color: #fff; margin: 0; font-size: 20px;\">{{ $json.body.locale === 'nl' ? 'Bericht ontvangen' : 'Message received' }}</h2>\n  </div>\n\n  <div style=\"background: #fff8f3; padding: 32px; border: 1px solid #f0d5c5; border-top: none; border-radius: 0 0 12px 12px;\">\n    {{ $json.body.locale === 'nl'\n      ? '<p style=\"margin: 0 0 16px; font-size: 15px;\">Hoi ' + $json.body.name.split(' ')[0] + ',</p><p style=\"font-size: 15px; line-height: 1.6; color: #3a2020;\">Bedankt voor je bericht. Ik heb het ontvangen en reageer binnen twee werkdagen.</p><p style=\"font-size: 15px; line-height: 1.6; color: #3a2020;\">Als je ondertussen wil kijken hoe we kunnen samenwerken, bekijk dan de <a href=\"https://svdonline.com/nl/work-with-me\" style=\"color: #FF2D8A;\">pakketten</a>.</p>'\n      : '<p style=\"margin: 0 0 16px; font-size: 15px;\">Hi ' + $json.body.name.split(' ')[0] + ',</p><p style=\"font-size: 15px; line-height: 1.6; color: #3a2020;\">Thanks for reaching out. I\\'ve received your message and will get back to you within two business days.</p><p style=\"font-size: 15px; line-height: 1.6; color: #3a2020;\">In the meantime, if you want to explore working together, take a look at the <a href=\"https://svdonline.com/en/work-with-me\" style=\"color: #FF2D8A;\">packages</a>.</p>'\n    }}\n\n    <p style=\"margin-top: 32px; font-size: 15px;\">{{ $json.body.locale === 'nl' ? 'Met vriendelijke groet,' : 'Best,' }}</p>\n    <p style=\"font-weight: 700; font-size: 15px; color: #FF2D8A; margin: 4px 0 0;\">Shoka</p>\n    <p style=\"font-size: 13px; color: #7a5048; margin: 4px 0 0;\">SVD Online · <a href=\"https://svdonline.com\" style=\"color: #7a5048;\">svdonline.com</a></p>\n  </div>\n</div>",
+        "options": {}
+      },
+      "id": "confirmation-to-sender",
+      "name": "Confirmation to Sender",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [460, 620]
+    }
+  ],
+  "connections": {
+    "Contact Form Webhook": {
+      "main": [
+        [
+          { "node": "Respond OK", "type": "main", "index": 0 },
+          { "node": "Email to Shoka", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Email to Shoka": {
+      "main": [
+        [
+          { "node": "Confirmation to Sender", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-05-18T00:00:00.000Z",
+  "versionId": "1"
+}

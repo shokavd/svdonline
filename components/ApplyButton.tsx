@@ -195,8 +195,10 @@ export function ApplyButton({
     <>
       <button
         onClick={() => setOpen(true)}
-        className={`block w-full text-center font-semibold text-sm px-5 py-3 rounded-lg transition-opacity hover:opacity-90 ${
-          accent ? "bg-[var(--accent)] text-white" : "bg-[var(--foreground)] text-white"
+        className={`block w-full text-center font-semibold text-sm px-5 py-3 rounded-lg transition-all ${
+          accent
+            ? "btn-glow bg-[var(--accent)] text-white hover:opacity-90"
+            : "border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white"
         }`}
       >
         {f.modalTitle(packageName)}

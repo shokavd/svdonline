@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import ClientRedirect from "../../../components/ClientRedirect";
 import { TOOLS } from "../../../lib/tools";
 
 export function generateStaticParams() {
@@ -7,5 +7,5 @@ export function generateStaticParams() {
 
 export default async function ToolSlug({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  redirect(`/en/tools/${slug}`);
+  return <ClientRedirect to={`/en/tools/${slug}/`} />;
 }

@@ -1,2 +1,5 @@
-import { redirect } from "next/navigation";
-export default function Tools() { redirect("/en/tools"); }
+import ClientRedirect from "../../components/ClientRedirect";
+
+export default function Tools() {
+  return <ClientRedirect to="/en/tools/" />;
+}

@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { TOOLS } from "../../../lib/tools";
 import { getT, type Locale } from "../../../lib/i18n";
+import ScrollReveal from "../../../components/ScrollReveal";
+import Tilt3D from "../../../components/Tilt3D";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -15,64 +17,157 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const a = t.about;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-      <div className="flex flex-col sm:flex-row items-start gap-8 mb-12">
-        <div className="shrink-0">
-          <div className="w-28 h-28 rounded-full overflow-hidden ring-4 ring-[var(--accent)] ring-offset-4 ring-offset-[var(--background)]">
-            <Image src="/shoka.jpg" alt="Shoka van Dooren" width={112} height={112} className="w-full h-full object-cover" priority />
+    <div style={{ background: "var(--dark)" }}>
+
+      {/* Hero */}
+      <section style={{ background: "var(--dark)" }} className="pt-32 pb-20 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-4">About</p>
+            <div className="flex flex-col sm:flex-row items-start gap-10">
+              <div className="shrink-0">
+                <div
+                  className="w-32 h-32 rounded-full overflow-hidden"
+                  style={{ boxShadow: "0 0 0 3px var(--accent), 0 0 0 6px var(--dark)", outline: "none" }}
+                >
+                  <Image
+                    src="/shoka.jpg"
+                    alt="Shoka van Dooren"
+                    width={128}
+                    height={128}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                </div>
+              </div>
+              <div>
+                <h1
+                  className="text-5xl sm:text-6xl font-black leading-tight text-white mb-4"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  {a.title}
+                </h1>
+                <p className="text-lg max-w-2xl" style={{ color: "var(--dark-muted)" }}>{a.subtitle}</p>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Value props */}
+      <section style={{ background: "var(--background)" }} className="py-16 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <div
+              className="flex flex-wrap gap-8 rounded-2xl p-8"
+              style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+            >
+              {[
+                { icon: "⚡", label: locale === "nl" ? "Actief sinds 2022" : "Building since 2022", desc: locale === "nl" ? "Automatiseringen voor kleine bedrijven" : "Automation workflows for small businesses" },
+                { icon: "🌍", label: locale === "nl" ? "Wereldwijd bereikbaar" : "Working worldwide", desc: locale === "nl" ? "Klanten in Nederland en daarbuiten" : "Clients across the Netherlands and beyond" },
+                { icon: "🔍", label: locale === "nl" ? "Geen betaalde samenwerkingen" : "Zero paid partnerships", desc: locale === "nl" ? "Elke review is volledig onafhankelijk" : "Every review is fully independent" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-3 flex-1 min-w-[180px]">
+                  <span className="text-xl shrink-0 mt-0.5">{item.icon}</span>
+                  <div>
+                    <p className="font-bold text-sm" style={{ color: "var(--foreground)" }}>{item.label}</p>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--dark-muted)" }}>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Content sections */}
+      <section style={{ background: "var(--dark)" }} className="py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-6">
+
+            <ScrollReveal delay={0}>
+              <Tilt3D className="h-full" intensity={6}>
+                <div
+                  className="dark-card rounded-2xl p-8 h-full"
+                  style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+                >
+                  <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-3">What I do</p>
+                  <h2 className="text-xl font-black mb-4" style={{ color: "var(--foreground)" }}>{a.whatIDoTitle}</h2>
+                  <p className="leading-relaxed mb-3" style={{ color: "var(--dark-muted)" }}>{a.whatIDoBody1}</p>
+                  <p className="leading-relaxed" style={{ color: "var(--dark-muted)" }}>{a.whatIDoBody2}</p>
+                </div>
+              </Tilt3D>
+            </ScrollReveal>
+
+            <ScrollReveal delay={80}>
+              <Tilt3D className="h-full" intensity={6}>
+                <div
+                  className="dark-card rounded-2xl p-8 h-full"
+                  style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+                >
+                  <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-3">Why I built this</p>
+                  <h2 className="text-xl font-black mb-4" style={{ color: "var(--foreground)" }}>{a.whyBuiltTitle}</h2>
+                  <p className="leading-relaxed mb-3" style={{ color: "var(--dark-muted)" }}>{a.whyBuiltBody1}</p>
+                  <p className="leading-relaxed" style={{ color: "var(--dark-muted)" }}>{a.whyBuiltBody2}</p>
+                </div>
+              </Tilt3D>
+            </ScrollReveal>
+
+            <ScrollReveal delay={160}>
+              <Tilt3D className="h-full" intensity={6}>
+                <div
+                  className="dark-card rounded-2xl p-8 h-full"
+                  style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+                >
+                  <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-3">Affiliates</p>
+                  <h2 className="text-xl font-black mb-4" style={{ color: "var(--foreground)" }}>{a.affiliateTitle}</h2>
+                  <p className="leading-relaxed mb-3" style={{ color: "var(--dark-muted)" }}>{a.affiliateBody1}</p>
+                  <p className="leading-relaxed" style={{ color: "var(--dark-muted)" }}>{a.affiliateBody2}</p>
+                </div>
+              </Tilt3D>
+            </ScrollReveal>
+
+            <ScrollReveal delay={240}>
+              <Tilt3D className="h-full" intensity={6}>
+                <div
+                  className="dark-card rounded-2xl p-8 h-full"
+                  style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+                >
+                  <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-3">Testing</p>
+                  <h2 className="text-xl font-black mb-4" style={{ color: "var(--foreground)" }}>{a.howTestTitle}</h2>
+                  <p className="leading-relaxed mb-3" style={{ color: "var(--dark-muted)" }}>{a.howTestBody1}</p>
+                  <p className="leading-relaxed" style={{ color: "var(--dark-muted)" }}>{a.howTestBody2}</p>
+                </div>
+              </Tilt3D>
+            </ScrollReveal>
+
           </div>
         </div>
-        <div>
-          <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">{a.title}</h1>
-          <p className="text-[var(--muted)] leading-relaxed">{a.subtitle}</p>
-        </div>
-      </div>
+      </section>
 
-      <div className="space-y-8 text-[var(--muted)] leading-relaxed">
-        <section>
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-3">{a.whatIDoTitle}</h2>
-          <p>{a.whatIDoBody1}</p>
-          <p className="mt-3">{a.whatIDoBody2}</p>
-        </section>
-        <section>
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-3">{a.whyBuiltTitle}</h2>
-          <p>{a.whyBuiltBody1}</p>
-          <p className="mt-3">{a.whyBuiltBody2}</p>
-        </section>
-        <section>
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-3">{a.affiliateTitle}</h2>
-          <p>{a.affiliateBody1}</p>
-          <p className="mt-3">{a.affiliateBody2}</p>
-        </section>
-        <section>
-          <h2 className="text-xl font-bold text-[var(--foreground)] mb-3">{a.howTestTitle}</h2>
-          <p>{a.howTestBody1}</p>
-          <p className="mt-3">{a.howTestBody2}</p>
-        </section>
-      </div>
+      {/* CTA */}
+      <section style={{ background: "var(--background)" }} className="py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <div
+              className="rounded-2xl p-10 text-center"
+              style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+            >
+              <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-4">Explore</p>
+              <h2 className="text-4xl font-black mb-3" style={{ color: "var(--foreground)" }}>{a.ctaTitle}</h2>
+              <p className="text-lg mb-8 max-w-xl mx-auto" style={{ color: "var(--dark-muted)" }}>{a.ctaSubtitle}</p>
+              <Link
+                href={`/${locale}/tools`}
+                className="btn-glow font-bold px-7 py-3.5 rounded-xl text-sm inline-block"
+                style={{ background: "var(--accent)", color: "#fff" }}
+              >
+                {a.browseTools}
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
-      <div className="grid grid-cols-3 gap-4 my-12 py-8 border-y border-[var(--border)]">
-        <div className="text-center">
-          <p className="text-3xl font-bold text-[var(--accent)]">{TOOLS.length}</p>
-          <p className="text-sm text-[var(--muted)] mt-1">{a.toolsReviewed}</p>
-        </div>
-        <div className="text-center">
-          <p className="text-3xl font-bold text-[var(--accent)]">3+</p>
-          <p className="text-sm text-[var(--muted)] mt-1">{a.yearsOnline}</p>
-        </div>
-        <div className="text-center">
-          <p className="text-3xl font-bold text-[var(--accent)]">0</p>
-          <p className="text-sm text-[var(--muted)] mt-1">{a.paidPlacements}</p>
-        </div>
-      </div>
-
-      <div className="bg-[var(--accent-light)] border border-orange-200 rounded-2xl p-8">
-        <h2 className="text-xl font-bold text-[var(--foreground)] mb-2">{a.ctaTitle}</h2>
-        <p className="text-[var(--muted)] mb-4">{a.ctaSubtitle}</p>
-        <Link href={`/${locale}/tools`} className="inline-block bg-[var(--accent)] text-white font-semibold px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity text-sm">
-          {a.browseTools}
-        </Link>
-      </div>
     </div>
   );
 }

@@ -1,20 +1,89 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FDFAF7;
-  --foreground: #1C1917;
-  --accent: #E8703A;
-  --accent-light: #FEF3EC;
-  --muted: #78716C;
-  --card: #FFFFFF;
-  --border: #E7E5E4;
+  /* ── Option MX: Bougainvillea + Marigold ── */
+  --accent:        #FF2D8A;   /* Bougainvillea magenta */
+  --accent-dim:    #E01070;   /* Deep magenta hover */
+  --accent2:       #FFB300;   /* Cempasúchil marigold */
+  --accent2-bright:#FFD84F;   /* Marigold glow */
+
+  /* ── Dark mode surfaces — deep plum-black, no green ── */
+  --background:    #130D16;
+  --foreground:    #F5F0F8;
+  --muted:         #A080B8;
+
+  --card:          #1A1220;
+  --card2:         #201828;
+  --border:        #2E2040;
+
+  --dark:          #0C0810;
+  --dark-card:     #100B14;
+  --dark-border:   #332050;
+  --dark-muted:    #B890CC;
+
+  /* ── Header ── */
+  --header-scrolled-bg: rgba(12,8,16,0.92);
+  --header-border: rgba(255,45,138,0.10);
+}
+
+/* ── Light mode overrides ── */
+[data-theme="light"] {
+  --background:    #FFF8F3;
+  --foreground:    #1A0508;
+  --muted:         #7A5048;
+
+  --card:          #FFFFFF;
+  --card2:         #FFF4EC;
+  --border:        #F0D5C5;
+
+  --dark:          #F0E8DE;   /* Parchment (hero, footer bg) */
+  --dark-card:     #EDE1D5;
+  --dark-border:   #DFCFC3;
+  --dark-muted:    #8C6A5A;
+
+  --header-scrolled-bg: rgba(255,248,243,0.95);
+  --header-border: rgba(255,45,138,0.14);
+}
+
+/* Light mode — fix hardcoded white text */
+[data-theme="light"] .text-white { color: var(--foreground) !important; }
+[data-theme="light"] .hover\:text-white:hover { color: var(--foreground) !important; }
+
+/* Light mode — more dimension on cards */
+[data-theme="light"] .dark-card {
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+[data-theme="light"] .dark-card:hover {
+  border-color: rgba(255,45,138,0.30) !important;
+  box-shadow: 0 12px 40px rgba(255,45,138,0.10), 0 2px 8px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+/* Service cards in light mode — boost colour tint + add depth */
+[data-theme="light"] .svc-card {
+  background: rgba(255,45,138,0.13) !important;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+}
+[data-theme="light"] .svc-card-sm {
+  background: rgba(255,179,0,0.14) !important;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+}
+[data-theme="light"] .svc-card-wide {
+  background: rgba(255,179,0,0.15) !important;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+}
+[data-theme="light"] .gradient-border::before {
+  background: linear-gradient(135deg,
+    rgba(255,45,138,0.5) 0%,
+    rgba(255,179,0,0.20) 50%,
+    rgba(255,45,138,0.08) 100%);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
-  --color-accent-light: var(--accent-light);
   --color-muted: var(--muted);
   --color-card: var(--card);
   --color-border: var(--border);
@@ -22,7 +91,125 @@
   --font-mono: var(--font-geist-mono);
 }
 
-body {
+html, body {
   background: var(--background);
   color: var(--foreground);
+  transition: background 0.4s ease, color 0.3s ease;
 }
+
+/* ── Hide native cursor on pointer devices ── */
+@media (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
+}
+
+/* ── Marquee ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+/* ── Glow blobs ── */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.14; transform: scale(1); }
+  50%       { opacity: 0.25; transform: scale(1.07); }
+}
+.glow-blob  { animation: glow-pulse 8s ease-in-out infinite; }
+.glow-blob2 { animation: glow-pulse 10s ease-in-out infinite reverse; animation-delay: -4s; }
+
+/* ── CTA primary button glow (amber for C, coral for D) ── */
+.btn-glow {
+  box-shadow: 0 0 18px rgba(255,45,138,0.45), 0 4px 20px rgba(0,0,0,0.5);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 30px rgba(255,45,138,0.7), 0 6px 28px rgba(0,0,0,0.6);
+  transform: translateY(-1px);
+}
+
+/* ── Ghost button — visible on both dark and light ── */
+.btn-ghost {
+  border: 1px solid rgba(255,255,255,0.20);
+  color: rgba(255,255,255,0.82);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.btn-ghost:hover {
+  border-color: rgba(255,45,138,0.55);
+  color: #fff;
+  background: rgba(255,45,138,0.07);
+}
+[data-theme="light"] .btn-ghost {
+  border: 1px solid rgba(0,0,0,0.18);
+  color: rgba(0,0,0,0.72);
+}
+[data-theme="light"] .btn-ghost:hover {
+  border-color: rgba(255,45,138,0.5);
+  color: var(--foreground);
+  background: rgba(255,45,138,0.06);
+}
+
+/* ── Gradient border (teal) ── */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    rgba(255,45,138,0.55) 0%,
+    rgba(255,179,0,0.18) 50%,
+    rgba(255,45,138,0.08) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Featured package border (magenta + marigold) ── */
+.gradient-border-orange::before {
+  background: linear-gradient(135deg,
+    rgba(255,45,138,0.70) 0%,
+    rgba(255,179,0,0.30) 50%,
+    rgba(255,45,138,0.10) 100%);
+}
+
+/* ── Marigold label text — static, no flicker ── */
+.text-shimmer {
+  background: linear-gradient(90deg, var(--accent2) 0%, var(--accent2-bright) 50%, var(--accent2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Magenta label text — static ── */
+.text-shimmer-orange {
+  background: linear-gradient(90deg, var(--accent) 0%, #FF7DB8 50%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Featured package card (work-with-me) ── */
+[data-theme="light"] .pkg-card-featured {
+  background: var(--card) !important;
+  box-shadow: 0 0 0 2px rgba(255,45,138,0.35), 0 8px 40px rgba(255,45,138,0.12) !important;
+}
+
+/* ── Dark card hover ── */
+.dark-card {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+.dark-card:hover {
+  border-color: rgba(255,45,138,0.3) !important;
+  box-shadow: 0 8px 32px rgba(255,45,138,0.08);
+  transform: translateY(-2px);
+}
+
+/* ── Scroll reveal handled inline by ScrollReveal component ── */

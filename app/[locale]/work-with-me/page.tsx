@@ -1,5 +1,7 @@
 import { getT, type Locale } from "../../../lib/i18n";
 import { ApplyButton } from "../../../components/ApplyButton";
+import ScrollReveal from "../../../components/ScrollReveal";
+import Tilt3D from "../../../components/Tilt3D";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -20,138 +22,221 @@ export default async function WorkWithMePage({ params }: { params: Promise<{ loc
   const w = t.workWithMe;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div style={{ background: "var(--dark)" }}>
 
-      <div className="mb-14">
-        <h1 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4 leading-tight">{w.title}</h1>
-        <p className="text-lg text-[var(--muted)] leading-relaxed max-w-2xl">{w.subtitle}</p>
-        <div className="mt-6 flex flex-wrap gap-3 text-sm text-[var(--muted)]">
-          {Object.values(w.badges).map((badge) => (
-            <span key={badge} className="flex items-center gap-2 bg-[var(--card)] border border-[var(--border)] px-3 py-1.5 rounded-full">
-              <span className="text-green-600">✓</span> {badge}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <section className="mb-16">
-        <h2 className="text-xl font-bold text-[var(--foreground)] mb-6">{w.howItWorksTitle}</h2>
-        <div className="grid sm:grid-cols-5 gap-4">
-          {w.steps.map((step, i) => (
-            <div key={i} className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
-              <p className="text-2xl font-bold text-[var(--accent)] mb-2">{String(i + 1).padStart(2, "0")}</p>
-              <p className="font-semibold text-[var(--foreground)] text-sm mb-1">{step.title}</p>
-              <p className="text-xs text-[var(--muted)] leading-relaxed">{step.description}</p>
+      {/* Hero */}
+      <section style={{ background: "var(--dark)" }} className="pt-32 pb-20 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-4">Work with me</p>
+            <h1
+              className="text-5xl sm:text-6xl font-black leading-tight text-white mb-6"
+              style={{ color: "var(--foreground)" }}
+            >
+              {w.title}
+            </h1>
+            <p className="text-lg max-w-2xl mb-8" style={{ color: "var(--dark-muted)" }}>{w.subtitle}</p>
+            <div className="flex flex-wrap gap-3">
+              {Object.values(w.badges).map((badge) => (
+                <span
+                  key={badge}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm"
+                  style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)", color: "var(--dark-muted)" }}
+                >
+                  <span style={{ color: "var(--accent2)" }}>✓</span> {badge}
+                </span>
+              ))}
             </div>
-          ))}
+          </ScrollReveal>
         </div>
       </section>
 
-      <section className="mb-16">
-        <h2 className="text-xl font-bold text-[var(--foreground)] mb-2">{w.packagesTitle}</h2>
-        <p className="text-[var(--muted)] mb-8 text-sm">{w.packagesSubtitle}</p>
-
-        <div className="grid sm:grid-cols-2 gap-6">
-          {packages.map((pkg) => {
-            const details = w.packageDetails[pkg.id];
-            return (
-              <div
-                key={pkg.id}
-                className={`rounded-2xl border p-6 flex flex-col ${
-                  pkg.accent
-                    ? "border-[var(--accent)] bg-[var(--accent-light)]"
-                    : "border-[var(--border)] bg-[var(--card)]"
-                }`}
-              >
-                {pkg.accent && (
-                  <span className="text-xs font-semibold text-[var(--accent)] bg-orange-100 px-2.5 py-1 rounded-full w-fit mb-3">
-                    {w.mostPopular}
-                  </span>
-                )}
-
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-[var(--foreground)]">{pkg.name}</h3>
-                  <div className="flex items-baseline gap-2 mt-1">
-                    <span className="text-2xl font-bold text-[var(--accent)]">{pkg.price}</span>
-                    <span className="text-sm text-[var(--muted)]">· {pkg.deposit} deposit</span>
-                  </div>
-                  <div className="flex gap-3 mt-2 text-xs text-[var(--muted)]">
-                    <span>⏱ {pkg.turnaround}</span>
-                    <span>·</span>
-                    <span>💬 {pkg.support} support</span>
-                  </div>
+      {/* How it works */}
+      <section style={{ background: "var(--background)" }} className="py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-3">Process</p>
+            <h2 className="text-4xl font-black mb-10" style={{ color: "var(--foreground)" }}>{w.howItWorksTitle}</h2>
+          </ScrollReveal>
+          <div className="grid sm:grid-cols-5 gap-4">
+            {w.steps.map((step, i) => (
+              <ScrollReveal key={i} delay={i * 70}>
+                <div
+                  className="dark-card rounded-xl p-5 h-full"
+                  style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+                >
+                  <p className="text-2xl font-black mb-3" style={{ color: "var(--accent)" }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <p className="font-semibold text-sm mb-2" style={{ color: "var(--foreground)" }}>{step.title}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--dark-muted)" }}>{step.description}</p>
                 </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">{details.description}</p>
+      {/* Packages */}
+      <section style={{ background: "var(--dark)" }} className="py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-3">Packages</p>
+            <h2 className="text-4xl font-black mb-3" style={{ color: "var(--foreground)" }}>{w.packagesTitle}</h2>
+            <p className="text-base mb-2" style={{ color: "var(--dark-muted)" }}>{w.packagesSubtitle}</p>
+            <p className="text-xs mb-12" style={{ color: "var(--dark-muted)", opacity: 0.7 }}>
+              {locale === "nl" ? "Alle prijzen zijn exclusief BTW (21%)." : "All prices are excluding VAT (21%)."}
+            </p>
+          </ScrollReveal>
 
-                <p className="text-xs font-semibold text-[var(--foreground)] mb-2">{w.goodFor}</p>
-                <p className="text-xs text-[var(--muted)] mb-4">{details.goodFor}</p>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {packages.map((pkg, idx) => {
+              const details = w.packageDetails[pkg.id];
+              return (
+                <ScrollReveal key={pkg.id} delay={idx * 80}>
+                  <Tilt3D className="h-full" intensity={5}>
+                    <div
+                      className={`rounded-2xl p-7 flex flex-col h-full ${pkg.accent ? "gradient-border-orange pkg-card-featured" : "dark-card"}`}
+                      style={{
+                        background: "var(--dark-card)",
+                        border: pkg.accent ? undefined : "1px solid var(--dark-border)",
+                      }}
+                    >
+                      {pkg.accent && (
+                        <span
+                          className="text-xs font-semibold px-2.5 py-1 rounded-full w-fit mb-4"
+                          style={{ background: "rgba(255,96,53,0.15)", color: "var(--accent)" }}
+                        >
+                          {w.mostPopular}
+                        </span>
+                      )}
 
-                <p className="text-xs font-semibold text-[var(--foreground)] mb-2">{w.included}</p>
-                <ul className="space-y-1.5 mb-4">
-                  {details.includes.map((item) => (
-                    <li key={item} className="flex gap-2 text-xs text-[var(--muted)]">
-                      <span className="text-green-600 shrink-0">✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                      <div className="mb-5">
+                        <h3 className="text-xl font-black mb-2" style={{ color: "var(--foreground)" }}>{pkg.name}</h3>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-2xl font-black" style={{ color: "var(--accent)" }}>{pkg.price}</span>
+                          <span className="text-sm" style={{ color: "var(--dark-muted)" }}>· {pkg.deposit} deposit</span>
+                        </div>
+                        <div className="flex gap-3 mt-2 text-xs" style={{ color: "var(--dark-muted)" }}>
+                          <span>⏱ {pkg.turnaround}</span>
+                          <span>·</span>
+                          <span>💬 {pkg.support} support</span>
+                        </div>
+                      </div>
 
-                <p className="text-xs font-semibold text-[var(--foreground)] mb-2">{w.notIncluded}</p>
-                <ul className="space-y-1.5 mb-6">
-                  {details.notIncludes.map((item) => (
-                    <li key={item} className="flex gap-2 text-xs text-[var(--muted)]">
-                      <span className="text-[var(--muted)] shrink-0">✗</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                      <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--dark-muted)" }}>{details.description}</p>
 
-                <div className="mt-auto">
-                  <ApplyButton
-                    locale={locale as Locale}
-                    packageId={pkg.id}
-                    packageName={pkg.name}
-                    accent={pkg.accent}
-                  />
-                </div>
+                      <p className="text-xs font-semibold mb-2" style={{ color: "var(--foreground)" }}>{w.goodFor}</p>
+                      <p className="text-xs mb-5" style={{ color: "var(--dark-muted)" }}>{details.goodFor}</p>
+
+                      <p className="text-xs font-semibold mb-2" style={{ color: "var(--foreground)" }}>{w.included}</p>
+                      <ul className="space-y-1.5 mb-5">
+                        {details.includes.map((item) => (
+                          <li key={item} className="flex gap-2 text-xs" style={{ color: "var(--dark-muted)" }}>
+                            <span className="shrink-0" style={{ color: "var(--accent2)" }}>✓</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <p className="text-xs font-semibold mb-2" style={{ color: "var(--foreground)" }}>{w.notIncluded}</p>
+                      <ul className="space-y-1.5 mb-7">
+                        {details.notIncludes.map((item) => (
+                          <li key={item} className="flex gap-2 text-xs" style={{ color: "var(--dark-muted)" }}>
+                            <span className="shrink-0" style={{ color: "var(--dark-muted)" }}>✗</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="mt-auto">
+                        <ApplyButton
+                          locale={locale as Locale}
+                          packageId={pkg.id}
+                          packageName={pkg.name}
+                          accent={pkg.accent}
+                        />
+                      </div>
+                    </div>
+                  </Tilt3D>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Cancellation policy */}
+      <section style={{ background: "var(--background)" }} className="py-16 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <div
+              className="rounded-2xl p-8"
+              style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+            >
+              <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-3">Policy</p>
+              <h2 className="text-lg font-black mb-4" style={{ color: "var(--foreground)" }}>{w.cancellationTitle}</h2>
+              <div className="space-y-3 text-sm" style={{ color: "var(--dark-muted)" }}>
+                <p>
+                  <strong style={{ color: "var(--foreground)" }}>{w.cancellationBefore.title}:</strong>{" "}
+                  {w.cancellationBefore.body}
+                </p>
+                <p>
+                  <strong style={{ color: "var(--foreground)" }}>{w.cancellationAfter.title}:</strong>{" "}
+                  {w.cancellationAfter.body}
+                </p>
+                <p className="text-xs">{w.cancellationNote}</p>
               </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="mb-16 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6">
-        <h2 className="text-base font-bold text-[var(--foreground)] mb-3">{w.cancellationTitle}</h2>
-        <div className="space-y-2 text-sm text-[var(--muted)]">
-          <p><strong className="text-[var(--foreground)]">{w.cancellationBefore.title}:</strong> {w.cancellationBefore.body}</p>
-          <p><strong className="text-[var(--foreground)]">{w.cancellationAfter.title}:</strong> {w.cancellationAfter.body}</p>
-          <p className="text-xs">{w.cancellationNote}</p>
-        </div>
-      </section>
-
-      <section className="mb-16">
-        <h2 className="text-xl font-bold text-[var(--foreground)] mb-6">{w.faqTitle}</h2>
-        <div className="space-y-4">
-          {w.faq.map(({ q, a }) => (
-            <div key={q} className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5">
-              <p className="font-semibold text-[var(--foreground)] text-sm mb-2">{q}</p>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">{a}</p>
             </div>
-          ))}
+          </ScrollReveal>
         </div>
       </section>
 
-      <div className="bg-[var(--accent-light)] border border-orange-200 rounded-2xl p-8 text-center">
-        <h2 className="text-xl font-bold text-[var(--foreground)] mb-2">{w.ctaTitle}</h2>
-        <p className="text-[var(--muted)] mb-4 text-sm">{w.ctaSubtitle}</p>
-        <a
-          href="mailto:contact@svdonline.com"
-          className="inline-block bg-[var(--accent)] text-white font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity text-sm"
-        >
-          {w.getInTouch}
-        </a>
-      </div>
+      {/* FAQ */}
+      <section style={{ background: "var(--dark)" }} className="py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-3">FAQ</p>
+            <h2 className="text-4xl font-black mb-10" style={{ color: "var(--foreground)" }}>{w.faqTitle}</h2>
+          </ScrollReveal>
+          <div className="space-y-4">
+            {w.faq.map(({ q, a }, idx) => (
+              <ScrollReveal key={q} delay={idx * 50}>
+                <div
+                  className="dark-card rounded-xl p-6"
+                  style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+                >
+                  <p className="font-semibold text-sm mb-2" style={{ color: "var(--foreground)" }}>{q}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--dark-muted)" }}>{a}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section style={{ background: "var(--background)" }} className="py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <div
+              className="rounded-2xl p-10 text-center"
+              style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
+            >
+              <p className="text-shimmer text-xs font-semibold uppercase tracking-widest mb-4">Ready?</p>
+              <h2 className="text-4xl font-black mb-3" style={{ color: "var(--foreground)" }}>{w.ctaTitle}</h2>
+              <p className="text-base mb-8 max-w-xl mx-auto" style={{ color: "var(--dark-muted)" }}>{w.ctaSubtitle}</p>
+              <a
+                href="mailto:contact@svdonline.com"
+                className="btn-glow font-bold px-7 py-3.5 rounded-xl text-sm inline-block"
+                style={{ background: "var(--accent)", color: "#fff" }}
+              >
+                {w.getInTouch}
+              </a>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
     </div>
   );
