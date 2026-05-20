@@ -170,14 +170,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                     priority
                   />
                 </div>
-                {/* Floating accent badge */}
-                <div className="absolute -bottom-4 -right-4 w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl shadow-xl"
+                {/* Floating logo badge */}
+                <div className="absolute -bottom-4 -right-4 w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl"
                   style={{
-                    background: "var(--accent)",
-                    color: "#fff",
+                    background: "var(--dark-card)",
                     boxShadow: "0 0 24px rgba(255,45,138,0.55)",
+                    border: "1px solid var(--dark-border)",
                   }}>
-                  S
+                  <Image src="/logo-mark.png" alt="SVD Online" width={40} height={40} />
                 </div>
               </div>
             </div>

@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export const dynamic = "force-static";
 export const alt = "SVD Online: AI automation workflows and honest tool reviews";
@@ -6,6 +8,9 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OgImage() {
+  const logoBuffer = readFileSync(join(process.cwd(), "public/logo-mark.png"));
+  const logoDataUrl = `data:image/png;base64,${logoBuffer.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -22,22 +27,8 @@ export default function OgImage() {
       >
         {/* Logo row */}
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: 12,
-              background: "#FF2D8A",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 900,
-              fontSize: 22,
-              color: "#fff",
-            }}
-          >
-            S
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoDataUrl} width={48} height={48} alt="SVD Online mark" />
           <span style={{ color: "#F5F0F8", fontWeight: 700, fontSize: 22 }}>SVD Online</span>
         </div>
 
