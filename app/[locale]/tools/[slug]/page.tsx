@@ -204,7 +204,7 @@ export default async function ToolPage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* Try it — bottom CTA panel */}
+      {/* Try it, bottom CTA panel */}
       <section style={{ background: "var(--background)" }} className="py-20 px-6 lg:px-14">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>

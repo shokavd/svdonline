@@ -46,7 +46,7 @@ export default function HeroBackgroundD() {
       const w = W(); const h = H();
       colorT += 0.006;
 
-      // Slow background fade — gives the "paint drying" diffusion effect
+      // Slow background fade, gives the "paint drying" diffusion effect
       const isLight = document.documentElement.getAttribute("data-theme") === "light";
       ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = isLight ? "rgba(255,248,243,0.038)" : "rgba(12,8,16,0.038)";
@@ -63,7 +63,7 @@ export default function HeroBackgroundD() {
         const speed = mouse.speed;
         const alpha = isLight ? 0.60 : 0.70;
 
-        // Main paint blob — size grows with speed
+        // Main paint blob, size grows with speed
         const brushR = Math.min(10 + speed * 2.2, 72);
         const grd = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, brushR);
         grd.addColorStop(0,    `rgba(${r},${g},${b},${alpha})`);
@@ -80,7 +80,7 @@ export default function HeroBackgroundD() {
         ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(alpha + 0.2, 0.92)})`;
         ctx.fill();
 
-        // Stroke segment connecting prev to current — continuous brush stroke
+        // Stroke segment connecting prev to current, continuous brush stroke
         if (mouse.px > 0 && speed > 2) {
           const strokeR = Math.min(5 + speed * 1.2, 40);
           const linGrd = ctx.createLinearGradient(mouse.px, mouse.py, mouse.x, mouse.y);

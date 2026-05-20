@@ -100,7 +100,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ══════════════════════════════════════════
-          HERO — particles, scramble, photo, stats
+          HERO, particles, scramble, photo, stats
       ══════════════════════════════════════════ */}
       <section className="relative min-h-[100svh] flex flex-col overflow-hidden px-6 lg:px-14 pt-6 pb-10"
         style={{ background: "var(--dark)" }}>
@@ -230,7 +230,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </div>
 
       {/* ══════════════════════════════════════════
-          SERVICES — glassmorphism + 3D tilt bento
+          SERVICES, glassmorphism + 3D tilt bento
       ══════════════════════════════════════════ */}
       <section className="py-28 px-6 lg:px-14 relative" style={{ background: "var(--dark)" }}>
         {/* Colour atmosphere */}
@@ -251,7 +251,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ScrollReveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 relative z-10">
-          {/* Build — featured large card */}
+          {/* Build, featured large card */}
           <ScrollReveal className="sm:col-span-2" delay={100}>
             <Tilt3D className="h-full" intensity={8}>
               <Link href={`/${locale}/work-with-me`}
@@ -345,7 +345,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* ══════════════════════════════════════════
-          SOCIAL PROOF — founding clients
+          SOCIAL PROOF, founding clients
       ══════════════════════════════════════════ */}
       <section className="py-24 px-6 lg:px-14" style={{ background: "var(--background)", borderTop: "1px solid var(--border)" }}>
         <div className="max-w-7xl mx-auto">
@@ -420,7 +420,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* ══════════════════════════════════════════
-          TOOLS — scroll reveal cards on light bg
+          TOOLS, scroll reveal cards on light bg
       ══════════════════════════════════════════ */}
       <section className="py-28 px-6 lg:px-14" style={{ background: "var(--background)", borderTop: "1px solid var(--border)" }}>
         <div className="max-w-7xl mx-auto">
@@ -471,7 +471,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* ══════════════════════════════════════════
-          CTA — big type + glow
+          CTA, big type + glow
       ══════════════════════════════════════════ */}
       <section className="relative py-32 sm:py-44 px-6 lg:px-14 overflow-hidden" style={{ background: "var(--dark)" }}>
         {/* Glow behind text */}

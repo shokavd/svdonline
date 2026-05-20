@@ -118,7 +118,7 @@ export function AdminForm() {
         </div>
       </div>
 
-      {/* Package selector — shows upgrade option if Claude flagged one */}
+      {/* Package selector, shows upgrade option if Claude flagged one */}
       <div>
         <label className={labelClass}>Package agreed on the call</label>
         <div className="flex flex-col gap-2">
@@ -141,7 +141,7 @@ export function AdminForm() {
                 onChange={() => setPackageName(upgradePackage)}
                 className="accent-orange-500"
               />
-              <span className="font-medium text-orange-600">{upgradePackage} <span className="text-gray-400 font-normal">(upgrade — Claude flagged this)</span></span>
+              <span className="font-medium text-orange-600">{upgradePackage} <span className="text-gray-400 font-normal">(upgrade, Claude flagged this)</span></span>
             </label>
           )}
         </div>
@@ -240,7 +240,7 @@ export function AdminForm() {
           />
           <span>
             <span className="font-medium">Send directly to client</span>
-            <span className="text-gray-400 block text-xs">Sent from contact@svdonline.com — you get a BCC copy</span>
+            <span className="text-gray-400 block text-xs">Sent from contact@svdonline.com, you get a BCC copy</span>
           </span>
         </label>
       </div>

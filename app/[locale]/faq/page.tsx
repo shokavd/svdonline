@@ -179,7 +179,7 @@ export default async function FAQPage({
             .
           </p>
 
-          {/* section — working together / samenwerken */}
+          {/* section, working together / samenwerken */}
           <div className="mb-14">
             <div className="flex items-center gap-3 mb-6">
               <span
@@ -200,7 +200,7 @@ export default async function FAQPage({
             </div>
           </div>
 
-          {/* section — tool reviews */}
+          {/* section, tool reviews */}
           <div>
             <div className="flex items-center gap-3 mb-6">
               <span

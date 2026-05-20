@@ -61,7 +61,7 @@ export default async function LocaleLayout({
               </a>
 
               {/*
-                Social links — uncomment when ready:
+                Social links, uncomment when ready:
                 <div className="flex items-center gap-4 mt-5">
                   <a href="https://linkedin.com/in/YOUR-HANDLE" ...>LinkedIn</a>
                   <a href="https://instagram.com/svdonline" ...>Instagram</a>
