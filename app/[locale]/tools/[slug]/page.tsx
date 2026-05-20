@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   if (!tool) return {};
   const loc = locale === "nl" && tool.nl ? tool.nl : null;
   return {
-    title: `${tool.name} Review — SVD Online`,
+    title: `${tool.name} Review | SVD Online`,
     description: loc ? loc.tagline : tool.tagline,
   };
 }

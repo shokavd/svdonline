@@ -33,7 +33,7 @@ export default async function TermsPage({
             body: (
               <>
                 Deze algemene voorwaarden regelen de relatie tussen SVD Online
-                (beheerd door Shoka van Dooren, Nederland — KvK: 98794671, BTW:
+                (beheerd door Shoka van Dooren, Nederland, KvK: 98794671, BTW:
                 NL005354685B30) en elke opdrachtgever
                 die SVD Online inschakelt voor dienstverlening. Door het invullen
                 van het intakeformulier of het op andere wijze verstrekken van
@@ -189,7 +189,7 @@ export default async function TermsPage({
             body: (
               <>
                 These Terms of Service govern the relationship between SVD
-                Online (operated by Shoka van Dooren, the Netherlands — KvK:
+                Online (operated by Shoka van Dooren, the Netherlands, KvK:
                 98794671, VAT: NL005354685B30) and any
                 client who engages SVD Online for services. By submitting the
                 intake form or otherwise commissioning work, you agree to these

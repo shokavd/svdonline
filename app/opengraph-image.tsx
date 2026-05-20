@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const dynamic = "force-static";
-export const alt = "SVD Online — AI automation workflows and honest tool reviews";
+export const alt = "SVD Online: AI automation workflows and honest tool reviews";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -67,7 +67,7 @@ export default function OgImage() {
             </span>
           </div>
           <p style={{ color: "#B890CC", fontSize: 20, margin: 0, maxWidth: 680 }}>
-            n8n workflows and honest tool reviews by Shoka van Dooren — no fluff, no sponsored nonsense.
+            n8n workflows and honest tool reviews by Shoka van Dooren. No fluff, no sponsored nonsense.
           </p>
         </div>
       </div>

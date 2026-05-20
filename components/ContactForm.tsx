@@ -96,11 +96,11 @@ export function ContactForm({ locale }: { locale: string }) {
       {status === "error" && (
         <p className="text-xs" style={{ color: "#f87171" }}>
           {isNL ? (
-            <>Er ging iets mis — probeer het opnieuw of mail{" "}
+            <>Er ging iets mis. Probeer het opnieuw of mail{" "}
               <a href="mailto:contact@svdonline.com" style={{ textDecoration: "underline" }}>contact@svdonline.com</a>.
             </>
           ) : (
-            <>Something went wrong — try again or email{" "}
+            <>Something went wrong. Try again or email{" "}
               <a href="mailto:contact@svdonline.com" style={{ textDecoration: "underline" }}>contact@svdonline.com</a>.
             </>
           )}

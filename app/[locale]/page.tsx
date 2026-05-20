@@ -358,7 +358,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </h2>
             <p className="text-base max-w-xl mb-14" style={{ color: "var(--muted)" }}>
               {locale === "nl"
-                ? "Geen portfolio van twintig klanten — nog niet. Maar hier is wat je wel krijgt als je nu instapt."
+                ? "Geen portfolio van twintig klanten. Nog niet. Maar hier is wat je wel krijgt als je nu instapt."
                 : "No portfolio of twenty clients yet. But here's exactly what you get by coming in early."}
             </p>
           </ScrollReveal>
@@ -376,8 +376,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 icon: "💰",
                 title: locale === "nl" ? "Founding-tarieven" : "Founding client pricing",
                 body: locale === "nl"
-                  ? "Mijn huidige tarieven weerspiegelen waar ik nu sta — niet waar ik naartoe ga. Zodra mijn agenda volloopt, gaan de prijzen omhoog."
-                  : "My current rates reflect where I am, not where I'm going. Once my calendar fills up, prices go up — and they won't come back down.",
+                  ? "Mijn huidige tarieven weerspiegelen waar ik nu sta, niet waar ik naartoe ga. Zodra mijn agenda volloopt, gaan de prijzen omhoog."
+                  : "My current rates reflect where I am, not where I'm going. Once my calendar fills up, prices go up. And they won't come back down.",
               },
               {
                 icon: "🔧",

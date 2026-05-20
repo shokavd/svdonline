@@ -8,8 +8,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: isNL ? "Contact | SVD Online" : "Contact | SVD Online",
     description: isNL
-      ? "Stuur Shoka een bericht — voor vragen over tools, automatisering of samenwerking."
-      : "Send Shoka a message — questions about tools, automation, or working together.",
+      ? "Stuur Shoka een bericht. Vragen over tools, automatisering of samenwerking."
+      : "Send Shoka a message. Questions about tools, automation, or working together.",
   };
 }
 
