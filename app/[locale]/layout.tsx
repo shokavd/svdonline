@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import SiteHeader from "../../components/SiteHeader";
 import MagneticCursor from "../../components/MagneticCursor";
@@ -43,10 +44,7 @@ export default async function LocaleLayout({
             {/* Brand + contact */}
             <div className="sm:col-span-2">
               <div className="flex items-center gap-2.5 mb-4">
-                <span className="flex items-center justify-center w-8 h-8 rounded-lg font-black text-sm select-none"
-                  style={{ background: "var(--accent)", color: "#fff" }}>
-                  S
-                </span>
+                <Image src="/logo-mark.png" alt="SVD Online" width={32} height={32} className="shrink-0" />
                 <span className="font-bold" style={{ color: "var(--foreground)" }}>SVD Online</span>
               </div>
               <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--dark-muted)" }}>
