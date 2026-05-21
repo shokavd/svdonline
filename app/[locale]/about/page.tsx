@@ -63,7 +63,6 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               style={{ background: "var(--dark-card)", border: "1px solid var(--dark-border)" }}
             >
               {[
-                { icon: "⚡", label: locale === "nl" ? "Actief sinds 2022" : "Building since 2022", desc: locale === "nl" ? "Automatiseringen voor kleine bedrijven" : "Automation workflows for small businesses" },
                 { icon: "🌍", label: locale === "nl" ? "Wereldwijd bereikbaar" : "Working worldwide", desc: locale === "nl" ? "Klanten in Nederland en daarbuiten" : "Clients across the Netherlands and beyond" },
                 { icon: "🔍", label: locale === "nl" ? "Geen betaalde samenwerkingen" : "Zero paid partnerships", desc: locale === "nl" ? "Elke review is volledig onafhankelijk" : "Every review is fully independent" },
               ].map((item) => (
