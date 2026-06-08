@@ -2,6 +2,10 @@ Options -MultiViews
 RewriteEngine On
 RewriteBase /
 
+# Redirect root to default locale
+RewriteRule ^$ /en/ [R=301,L]
+RewriteRule ^index\.html$ /en/ [R=301,L]
+
 # Add trailing slash to directories (except files)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !/$

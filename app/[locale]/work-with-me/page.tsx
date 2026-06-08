@@ -1,4 +1,5 @@
 import { getT, type Locale } from "../../../lib/i18n";
+import { localeAlternates } from "../../../lib/seo";
 import { ApplyButton } from "../../../components/ApplyButton";
 import ScrollReveal from "../../../components/ScrollReveal";
 import Tilt3D from "../../../components/Tilt3D";
@@ -6,7 +7,11 @@ import Tilt3D from "../../../components/Tilt3D";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = getT(locale as Locale);
-  return { title: t.meta.workWithMeTitle, description: t.meta.workWithMeDescription };
+  return {
+    title: t.meta.workWithMeTitle,
+    description: t.meta.workWithMeDescription,
+    alternates: localeAlternates(locale, "/work-with-me"),
+  };
 }
 
 const packages = [

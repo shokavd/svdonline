@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getFeaturedTools, TOOLS } from "../../lib/tools";
 import { getT, type Locale } from "../../lib/i18n";
+import { localeAlternates } from "../../lib/seo";
 import HeroBackground from "../../components/HeroBackground";
 import { ScrambleWord } from "../../components/ScrambleWord";
 import Tilt3D from "../../components/Tilt3D";
@@ -13,6 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: t.meta.siteTitle,
     description: t.meta.siteDescription,
+    alternates: localeAlternates(locale),
     openGraph: {
       title: t.meta.siteTitle,
       description: t.meta.siteDescription,

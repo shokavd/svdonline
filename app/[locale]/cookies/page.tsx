@@ -1,4 +1,5 @@
 import ScrollReveal from "../../../components/ScrollReveal";
+import { localeAlternates } from "../../../lib/seo";
 
 export async function generateMetadata({
   params,
@@ -9,6 +10,7 @@ export async function generateMetadata({
   const isNL = locale === "nl";
   return {
     title: isNL ? "Cookiebeleid | SVD Online" : "Cookie Policy | SVD Online",
+    alternates: localeAlternates(locale, "/cookies"),
   };
 }
 

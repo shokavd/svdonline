@@ -1,6 +1,19 @@
 import type { Locale } from "../../../lib/i18n";
+import { localeAlternates } from "../../../lib/seo";
 import ScrollReveal from "../../../components/ScrollReveal";
 import Tilt3D from "../../../components/Tilt3D";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const isNL = locale === "nl";
+  return {
+    title: isNL ? "Onboarding | SVD Online" : "Onboarding | SVD Online",
+    description: isNL
+      ? "Welkom bij SVD Online. Hier lees je wat er nu gaat gebeuren en hoe je alles instelt."
+      : "Welcome to SVD Online. Here's what happens next and how to get everything set up.",
+    alternates: localeAlternates(locale, "/onboarding"),
+  };
+}
 
 const content = {
   en: {

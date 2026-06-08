@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTool, TOOLS } from "../../../../lib/tools";
 import { getT, type Locale } from "../../../../lib/i18n";
+import { localeAlternates } from "../../../../lib/seo";
 import ScrollReveal from "../../../../components/ScrollReveal";
 
 export async function generateStaticParams() {
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: `${tool.name} Review | SVD Online`,
     description: loc ? loc.tagline : tool.tagline,
+    alternates: localeAlternates(locale, `/tools/${slug}`),
   };
 }
 

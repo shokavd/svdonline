@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { TOOLS, CATEGORIES } from "../../../lib/tools";
 import { getT, type Locale } from "../../../lib/i18n";
+import { localeAlternates } from "../../../lib/seo";
 import ScrollReveal from "../../../components/ScrollReveal";
 import Tilt3D from "../../../components/Tilt3D";
 
@@ -17,7 +18,11 @@ function StarRating({ rating }: { rating: number }) {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = getT(locale as Locale);
-  return { title: t.meta.toolsTitle, description: t.meta.toolsDescription };
+  return {
+    title: t.meta.toolsTitle,
+    description: t.meta.toolsDescription,
+    alternates: localeAlternates(locale, "/tools"),
+  };
 }
 
 export default async function ToolsPage({ params }: { params: Promise<{ locale: string }> }) {

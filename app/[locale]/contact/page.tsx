@@ -1,4 +1,5 @@
 import { getT, type Locale } from "../../../lib/i18n";
+import { localeAlternates } from "../../../lib/seo";
 import ScrollReveal from "../../../components/ScrollReveal";
 import { ContactForm } from "../../../components/ContactForm";
 
@@ -10,6 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: isNL
       ? "Stuur Shoka een bericht. Vragen over tools, automatisering of samenwerking."
       : "Send Shoka a message. Questions about tools, automation, or working together.",
+    alternates: localeAlternates(locale, "/contact"),
   };
 }
 

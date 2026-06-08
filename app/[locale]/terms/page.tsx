@@ -1,4 +1,5 @@
 import ScrollReveal from "../../../components/ScrollReveal";
+import { localeAlternates } from "../../../lib/seo";
 
 export async function generateMetadata({
   params,
@@ -11,6 +12,7 @@ export async function generateMetadata({
     title: isNL
       ? "Algemene Voorwaarden | SVD Online"
       : "Terms of Service | SVD Online",
+    alternates: localeAlternates(locale, "/terms"),
   };
 }
 

@@ -2,13 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { TOOLS } from "../../../lib/tools";
 import { getT, type Locale } from "../../../lib/i18n";
+import { localeAlternates } from "../../../lib/seo";
 import ScrollReveal from "../../../components/ScrollReveal";
 import Tilt3D from "../../../components/Tilt3D";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = getT(locale as Locale);
-  return { title: t.meta.aboutTitle, description: t.meta.aboutDescription };
+  return {
+    title: t.meta.aboutTitle,
+    description: t.meta.aboutDescription,
+    alternates: localeAlternates(locale, "/about"),
+  };
 }
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {

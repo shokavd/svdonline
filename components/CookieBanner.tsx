@@ -32,11 +32,11 @@ export default function CookieBanner({ locale }: { locale: string }) {
       <p className="text-xs leading-relaxed flex-1" style={{ color: "var(--dark-muted)" }}>
         {isNL
           ? <>
-              We slaan je themavoorkeur op in je browser (localStorage). Geen trackingcookies, geen advertenties.{" "}
+              We gebruiken Google Analytics om te begrijpen hoe deze site wordt gebruikt. Geen advertenties, geen profilering.{" "}
               <Link href={`/${locale}/cookies`} className="underline underline-offset-2 transition-colors hover:text-[var(--accent)]">Meer info</Link>.
             </>
           : <>
-              We store your theme preference in your browser (localStorage). No tracking cookies, no ads.{" "}
+              We use Google Analytics to understand how this site is used. No ads, no profiling.{" "}
               <Link href={`/${locale}/cookies`} className="underline underline-offset-2 transition-colors hover:text-[var(--accent)]">Learn more</Link>.
             </>
         }
